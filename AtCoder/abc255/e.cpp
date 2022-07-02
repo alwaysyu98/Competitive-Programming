@@ -8,20 +8,29 @@ int main() {
 	cout.tie(0);
 
 	int n, m;
+	cin >> n >> m;
 	vector<int> s(n - 1), x(m);
-	for (auto &t : s) cin >> s;
-	for (auto &t : s) cin >> x;
+	for (auto &t : s) cin >> t;
+	for (auto &t : x) cin >> t;
 
-	vector<long long> a(n + 1);
-	for (int i = 1; i <= n; ++i)
-		a[i] = s[i - 1] - a[i - 1];
+	long long sum = 0;
+	unordered_map<long long, int> g;
+	for (int i = 0; i < n; ++i) {
+		if (i % 2)
+			for (int j = 0; j < m; ++j)
+				g[x[j] - sum] += 1;
+		else
+			for (int j = 0; j < m; ++j)
+				g[sum - x[j]] += 1;
+		sum = -sum + s[i];
+	}
 
-	map<long long, long long> g;
-	for (int i = 0; i < n; ++i)
-		for (int j = 0; j < m; ++j) {
-			long long c = x[j] - b[i];
-		}
+	int maxx = 0;
+	for (auto [k, v] : g)
+		maxx = max(maxx, v);
 
+	cout << maxx;
+			
 	return 0;
 }
 
